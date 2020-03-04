@@ -20,18 +20,23 @@ public class SbdemoController {
     private ArrayList<Integer> getternary(int i) {
         ArrayList<Integer> ical = new ArrayList<Integer>();
         int x = i;
+
         while (x >= 3) {
             int div = 0;
             int mod = 0;
             div = x % 3;
             mod = x / 3;
-            if (mod > 3) {
+            if (mod > 0) {
                 ical.add(div);
             } else {
                 ical.add(mod);
             }
             x = x / 3;
         }
+
+        ical.add(x);
+
+
         int ilen = ical.size();
         int zeronum;
         for (zeronum = 0; zeronum < 8 - ilen; zeronum++) {
@@ -62,12 +67,11 @@ public class SbdemoController {
                 case 2: //做减法
             }
         }
-
-
         return "";
     }
 
     private String calc() {
+        getternary(6);
 
         ArrayList<String> rStr = new ArrayList();
 
