@@ -35,6 +35,60 @@ public class CommonLib {
 
     }
 
+
+    private static String checkandreturn1(int i) {
+        int[] ilist = {1,2,3,4,5,6,7,8,9};
+        //用三进制0，1，2表示连接，加和减
+        ArrayList<Integer> ical = getternary(i);
+
+        //拼计算公式
+        ArrayList<String> furmula = new ArrayList<>();
+        String strTmp = String.valueOf(ilist[0]);
+        for (int ipos = 0; ipos < ical.size(); ipos++) {
+            //如果不是连接符0，而是计算符号1、2，则把strtmp压入公式
+            if (ical.get(ipos) == 0) {
+                strTmp = strTmp + ilist[ipos + 1];
+            } else {
+                furmula.add(strTmp);
+                //翻译加减号
+                if (ical.get(ipos) == 1) {
+                    furmula.add(String.valueOf('+'));
+                } else {
+                    furmula.add(String.valueOf('-'));
+                }
+                strTmp = String.valueOf(ilist[ipos + 1]);
+            }
+        }
+        furmula.add(strTmp);
+
+        //已经有公式了，就要开始计算了
+        int iresult = 0;
+        for (int ipos = 0; ipos < furmula.size(); ipos++) {
+            if (furmula.get(ipos).equals("+")) {
+                if (iresult == 0) {
+                    iresult = Integer.valueOf(furmula.get(ipos - 1));
+                }
+                iresult = iresult + Integer.valueOf(furmula.get(ipos + 1));
+            }
+            if (furmula.get(ipos).equals("-")) {
+                if (iresult == 0) {
+                    iresult = Integer.valueOf(furmula.get(ipos - 1));
+                }
+                iresult = iresult - Integer.valueOf(furmula.get(ipos + 1));
+            }
+        }
+
+        if (iresult == 100) {
+            String str = new String();
+            for (int ipos = 0; ipos < furmula.size(); ipos++) {
+                str = str + furmula.get(ipos);
+            }
+            return str+"=100"+"<br>";
+        }
+        return "";
+
+    }
+
     private static String checkandreturn(int i) {
         int[] ilist = {9, 8, 7, 6, 5, 4, 3, 2, 1};
         //用三进制0，1，2表示连接，加和减
@@ -101,6 +155,16 @@ public class CommonLib {
                 icount++;
             }
         }
+
+        for (int i = 0; i < Math.pow(3, 8); i++) {
+            String str = checkandreturn1(i);
+            if (str != "") {
+                rStr.add(icount+": "+str);
+                icount++;
+            }
+        }
+
+
         return rStr.toString();
 
     }
