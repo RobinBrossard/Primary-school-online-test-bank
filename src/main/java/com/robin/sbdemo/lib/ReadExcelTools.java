@@ -1,5 +1,15 @@
 package com.robin.sbdemo.lib;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.robin.sbdemo.Controller.SbdemoController;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,21 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-//import com.yarui.controller.ActualAppController;
-import com.robin.sbdemo.Controller.SbdemoController;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 public class ReadExcelTools {
     private static final Log logger = LogFactory.getLog(SbdemoController.class);
@@ -125,7 +120,11 @@ public class ReadExcelTools {
 
         //判断数据的类型
         switch (cell.getCellType()) {
+            case _NONE:
+                cellValue = "_NONE";
+                break;
             case NUMERIC: //数字
+
                 if(!DateUtil.isCellDateFormatted(cell)) { //纯数字
                     NumberFormat nf = NumberFormat.getInstance();
                     cellValue = nf.format(cell.getNumericCellValue());

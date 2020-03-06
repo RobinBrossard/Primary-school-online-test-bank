@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @SpringBootApplication
 public class SbdemoController {
-    @RequestMapping("/")
+    @RequestMapping("/b")
     public String spdemo() {
         return CommonLib.calc();
     }
