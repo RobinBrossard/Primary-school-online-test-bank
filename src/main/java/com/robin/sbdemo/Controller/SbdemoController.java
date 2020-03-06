@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @SpringBootApplication
@@ -31,12 +32,22 @@ public class SbdemoController {
 
         File file=new File("d:/abc.xlsx");
         MultipartFile multipartFile=new MockMultipartFile(
-                "d:/abc.xlsx",
+                "abc.xlsx",
+                "abc.xlsx",
+                null,
                 new FileInputStream(file)
         );
+        String resstr = new String();
+        List<String[]> a=ReadExcelTools.readExcel(multipartFile);
+        for (String[] x:a ){
+            for(String xx:x){
+                resstr=resstr+xx+"<br>";
+            }
+
+        }
 
 
-        return ReadExcelTools.readExcel(multipartFile).toString();
+        return resstr;
     }
 
 }
