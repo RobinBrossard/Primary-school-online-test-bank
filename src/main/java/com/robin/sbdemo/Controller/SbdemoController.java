@@ -6,6 +6,7 @@ import com.robin.sbdemo.lib.ReadExcelTools;
 import org.apache.poi.openxml4j.opc.internal.ContentType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@SpringBootApplication
+
 public class SbdemoController {
     @RequestMapping("/b")
     public String spdemo() {
