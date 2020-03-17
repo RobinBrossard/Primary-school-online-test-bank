@@ -45,16 +45,21 @@
   var start = document.getElementById("touchmovebtn");
   var hammerstart = new Hammer(start);
 
-  hammerstart.on('any', function(ev) {  //pan???
-    console.log(ev); //输出拖移事件对象
+  hammerstart.on('pan', function(ev) {  //pan???
     ev.preventDefault(); // 阻止浏览器默认事件，重要
+    console.log(ev); //输出拖移事件对象
+    console.log("手势响应");
+
 
 
 
 
 
   });
-
+  start.ontouchmove=function(e){
+    e.stopPropagation();
+    //停止冒泡
+  };
 
 </script>
 
