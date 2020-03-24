@@ -416,6 +416,10 @@ document.querySelector("#retry").addEventListener("click", () => {
     lanes.forEach(lane => scene.remove(lane.mesh));
     initaliseValues();
     endDOM.style.visibility = 'hidden';
+    bkgaudio=document.getElementById('bkgaudio');
+    bkgaudio.play();
+    deathaudio= document.getElementById('deathmp3');
+    deathaudio.pause();
 });
 
 document.getElementById('forward').addEventListener("click", () => move('forward'));
@@ -443,6 +447,12 @@ window.addEventListener("keydown", event => {
 });
 
 function move(direction) {
+    jumpaudio= document.getElementById('jumpmp3');
+    jumpaudio.pause();
+    jumpaudio.currentTime=0;
+    jumpaudio.play();
+
+
     const finalPositions = moves.reduce((position, move) => {
         if (move === 'forward') return {lane: position.lane + 1, column: position.column};
         if (move === 'backward') return {lane: position.lane - 1, column: position.column};
@@ -565,6 +575,13 @@ function animate(timestamp) {
             const carMaxX = vechicle.position.x + vechicleLength * zoom / 2;
             if (chickenMaxX > carMinX && chickenMinX < carMaxX) {
                 endDOM.style.visibility = 'visible';
+                deathaudio= document.getElementById('deathmp3');
+                bkgaudio=document.getElementById('bkgaudio');
+                bkgaudio.pause();
+                deathaudio.pause();
+                deathaudio.currentTime=0;
+                deathaudio.play();
+
             }
         });
 

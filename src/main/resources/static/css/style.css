@@ -7,6 +7,8 @@ button {
   position: absolute;
   top: 20px;
   right: 20px;
+  font-size: 2em;
+  color: #3444ff;
 }
 #end {
   position: absolute;
@@ -50,13 +52,16 @@ button {
   width: 170px;
 }
 
-#touchbar button:first-of-type {
-  position: relative;
-  left: +50px;
-  width: 100px;
-  height: 100px;
+#touchbar #touchmovebtn {
+  position: fixed;
+  top:40%;
+  right:0%;
+  width: 5em;
+  height: 5em;
   border: 3px solid white;
   color: white;
   background-color: transparent;
   border-radius: 50%;
+  visibility: hidden; /*暂时隐藏下*/
 }
+

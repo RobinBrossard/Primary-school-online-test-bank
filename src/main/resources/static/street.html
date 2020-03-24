@@ -3,23 +3,38 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>基于Three.js的碰撞检测穿马路动画DEMO演示</title>
+  <title>小鸡过马路</title>
   
   
-  
-      <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   
 </head>
 
-<body>
+<body id="mainbody">
+
+<audio id="bkgaudio" autoplay="autoplay"  loop="loop" preload="auto"
+       src="audio/Super%20Mario%20Theme.mp3">
+  你的浏览器不支持audio标签
+</audio>
+
+<audio id="jumpmp3" preload="auto"
+       src="audio/jump.mp3">
+  你的浏览器不支持audio标签
+</audio>
+
+<audio id="deathmp3" preload="auto"
+       src="audio/death.mp3">
+  你的浏览器不支持audio标签
+</audio>
+
 <div style="text-align:center;clear:both;">
 
 </div>
   <div id="counter">0</div>
     
 <div id="controlls">
-  <div>
+  <div >
     <button id="forward">↑</button>
     <button id="left">←</button>
     <button id="backward">↓</button>
@@ -42,25 +57,36 @@
 <script src="js/hammer.min.js"></script>
 
 <script type="text/javascript">
-  var start = document.getElementById("touchmovebtn");
+  var start = document.getElementById("mainbody");
   var hammerstart = new Hammer(start);
-
-  hammerstart.on('pan', function(ev) {  //pan???
-    ev.preventDefault(); // 阻止浏览器默认事件，重要
-    console.log(ev); //输出拖移事件对象
-    console.log("手势响应");
-
-
-
-
-
-
+  hammerstart.get('swipe').set({
+    direction: Hammer.DIRECTION_ALL
   });
-  start.ontouchmove=function(e){
-    e.stopPropagation();
-    //停止冒泡
-  };
 
+  hammerstart.on('swipeup',
+          function(ev) {
+    ev.preventDefault(); // 阻止浏览器默认事件，重要
+
+            counterDOM.innerHTML="加油，加油";
+            move("forward");
+  });
+  hammerstart.on('swipedown',
+          function(ev) {
+            ev.preventDefault(); // 阻止浏览器默认事件，重要
+
+            move("backward");
+          });
+  hammerstart.on('swipeleft',
+          function(ev) {
+            ev.preventDefault(); // 阻止浏览器默认事件，重要
+
+            move("left");
+          });
+  hammerstart.on('swiperight',
+          function(ev) {
+            ev.preventDefault(); // 阻止浏览器默认事件，重要
+            move("right");
+          });
 </script>
 
 
