@@ -1,80 +1,172 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>学员满意度测评表</title>
+    <title>佑佑数学作业</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-1.8.0.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <style>
-    .a4-endwise{
-      width: 1075px;
-      height: 1567px;
-      border: 1px #000 solid;
-      overflow: hidden;
-      padding: 0;
-      word-break:break-all;
+</head>
+<style>
+    .a4-endwise {
+        width: 1075px;
+        height: 1567px;
+        border: 1px #000 solid;
+        overflow: hidden;
+        padding: 0;
+        word-break: break-all;
     }
-    .a4-broadwise{
-      width: 1569px;
-      height: 1073px;
-      border: 1px #000 solid;
-      overflow: hidden;
-      padding: 0;
-      word-break:break-all;
+
+    .a4-broadwise {
+        width: 1569px;
+        height: 1073px;
+        border: 1px #000 solid;
+        overflow: hidden;
+        padding: 0;
+        word-break: break-all;
     }
-    .print{
-      position: fixed;
-      top: 1%;
-      right: 10%;
+
+    .print {
+        position: fixed;
+        top: 1%;
+        right: 5%;
     }
-  </style>
-  <body>
+
+    .beforeHeader,
+    .afterFooter {
+        display: none;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    tr {
+        width: 100%;
+        font-size: 5.9mm;
+
+
+    }
+
+    .tdq {
+        width: 45%;
+        padding-left: 1em;
+    }
+    .tdn{
+        width: 5%;
+        text-align:right;
+    }
+
+    @media print {
+        /* 打印时显示 */
+        .beforeHeader,
+        .afterFooter {
+            display: block;
+        }
+    }
+
+</style>
+<body>
 <a class="print" href="javascript:;" onclick="preview();">打印</a>
 <!--startprint-->
-    <div class="container a4-endwise" id="test">
 
-    </div>
-    <div class="container a4-endwise">
+<div class="container a4-endwise" id="test">
+    <table id="examOne">
+        <script>
+            var text = "";
+            var q1="1+2=";
+            var q2="3x2=";
+            for (i = 0; i < 50; i++) {
+                var j,k=0;
+                j=i+1;
+                k=i+50+1;
+                text += "<tr>"+"<td class='tdn'>"+j+"</td>"
+                    +"<td class='tdq'>"+q1+"</td>"
+                    +"<td class='tdn'>"+k+"</td>"
+                    +"<td class='tdq'>"+q2+"</td>"+"</tr>";
+            }
+            document.getElementById("examOne").innerHTML=text;
+        </script>
 
-    </div>
-    <div class="container a4-endwise">
+    </table>
 
-    </div>
+</div>
+<div class="container a4-endwise">
+    <table id="examTwo">
+        <script>
+            var text = "";
+            var q1="1+2=";
+            var q2="3x2=";
+            for (i = 0; i < 50; i++) {
+                var j,k=0;
+                j=i+1;
+                k=i+50+1;
+                text += "<tr>"+"<td class='tdn'>"+j+"</td>"
+                    +"<td class='tdq'>"+q1+"</td>"
+                    +"<td class='tdn'>"+k+"</td>"
+                    +"<td class='tdq'>"+q2+"</td>"+"</tr>";
+            }
+            document.getElementById("examTwo").innerHTML=text;
+        </script>
+    </table>
+</div>
+
 <!--endprint-->
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        /**
-         * [打印]
-         * @return {[type]} [description]
-         */
-        function preview()
-        {
-            bdhtml=window.document.body.innerHTML;//获取当前页的html代码
-            sprnstr="<!--startprint-->";//设置打印开始区域
-            eprnstr="<!--endprint-->";//设置打印结束区域
-            prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+18); //从开始代码向后取html
-            prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));//从结束代码向前取html
-            window.document.body.innerHTML=prnhtml;
-            window.print();
-            window.document.body.innerHTML=bdhtml;
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.8.0.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    /**
+     * [打印]
+     * @return {[type]} [description]
+     */
+    function preview() {
+        bdhtml = window.document.body.innerHTML;//获取当前页的html代码
+        sprnstr = "<!--startprint-->";//设置打印开始区域
+        eprnstr = "<!--endprint-->";//设置打印结束区域
+        prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18); //从开始代码向后取html
+        prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));//从结束代码向前取html
+        window.document.body.innerHTML = prnhtml;
+        //打印之前设置IE打印时不打印页眉 、页脚
+        if (!!window.ActiveXObject || "ActiveXObject" in window) {
+            remove_ie_header_and_footer();
         }
-    </script>
 
-  </body>
+        window.print();
+        window.document.body.innerHTML = bdhtml;
+    }
+
+    //打印之前设置IE打印时不打印页眉 、页脚
+    function remove_ie_header_and_footer() {
+        alert("hi");
+        var hkey_root, hkey_path, hkey_key;
+        hkey_root = "HKEY_CURRENT_USER";
+        hkey_path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+        try {
+            var RegWsh = new ActiveXObject("WScript.Shell");
+            hkey_key = "header";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+            hkey_key = "footer";
+            RegWsh.RegWrite(hkey_root + hkey_path + hkey_key, "");
+        } catch (e) {
+        }
+    }
+
+
+</script>
+
+</body>
 </html>
