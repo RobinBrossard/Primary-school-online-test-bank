@@ -39,7 +39,6 @@
 
     .print {
         position: fixed;
-        top: 1%;
         right: 5%;
     }
 
@@ -78,7 +77,9 @@
 
 </style>
 <body>
-<a class="print" href="javascript:;" onclick="preview();">打印</a>
+<a class="print" href="javascript:;" onclick="preview();">打印</a><br/>
+<a class="print" href="javascript:;" onclick="redoexam();">重新出题</a>
+
 <!--startprint-->
 
 <div class="container a4-endwise" id="test">
@@ -133,6 +134,10 @@
      * [打印]
      * @return {[type]} [description]
      */
+    function redoexam() {
+        window.document.title="redoExam";
+    }
+
     function preview() {
         bdhtml = window.document.body.innerHTML;//获取当前页的html代码
         sprnstr = "<!--startprint-->";//设置打印开始区域
