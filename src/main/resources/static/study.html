@@ -62,9 +62,10 @@
         width: 45%;
         padding-left: 1em;
     }
-    .tdn{
+
+    .tdn {
         width: 5%;
-        text-align:right;
+        text-align: right;
     }
 
     @media print {
@@ -78,26 +79,48 @@
 </style>
 <body>
 <a class="print" href="javascript:;" onclick="preview();">打印</a><br/>
-<a class="print" href="javascript:;" onclick="redoexam();">重新出题</a>
+<a class="print" href="javascript:;" onclick="redoexam('hi world');">重新出题</a> <br/>
+<table style="border: 1px solid;width: 80%;align:right">
+    <tr>
+        <th>出题范围</th>
+        <th>参数最大值</th>
+        <th>结果最大值</th>
+    </tr>
+    <tr>
+
+        <td><select>
+            <option value="jiafa">加法</option>
+            <option value="jianfa">减法</option>
+            <option value="chengfa">乘法</option>
+            <option value="chufa">除法</option>
+            <option value="jiajian">加减法</option>
+            <option value="chengchu">乘除法</option>
+            <option value="sizehunhe">四则混合计算</option>
+        </select></td>
+        <td><input id="maxnum"/></td>
+        <td><input id="maxresult"/></td>
+    </tr>
+
+</table>
+<br/>
 
 <!--startprint-->
-
 <div class="container a4-endwise" id="test">
     <table id="examOne">
         <script>
             var text = "";
-            var q1="1+2=";
-            var q2="3x2=";
+            var q1 = "1+2=";
+            var q2 = "3x2=";
             for (i = 0; i < 50; i++) {
-                var j,k=0;
-                j=i+1;
-                k=i+50+1;
-                text += "<tr>"+"<td class='tdn'>"+j+"</td>"
-                    +"<td class='tdq'>"+q1+"</td>"
-                    +"<td class='tdn'>"+k+"</td>"
-                    +"<td class='tdq'>"+q2+"</td>"+"</tr>";
+                var j, k = 0;
+                j = i + 1;
+                k = i + 50 + 1;
+                text += "<tr>" + "<td class='tdn'>" + j + "</td>"
+                    + "<td class='tdq'>" + q1 + "</td>"
+                    + "<td class='tdn'>" + k + "</td>"
+                    + "<td class='tdq'>" + q2 + "</td>" + "</tr>";
             }
-            document.getElementById("examOne").innerHTML=text;
+            document.getElementById("examOne").innerHTML = text;
         </script>
 
     </table>
@@ -107,18 +130,18 @@
     <table id="examTwo">
         <script>
             var text = "";
-            var q1="1+2=";
-            var q2="3x2=";
+            var q1 = "1+2=";
+            var q2 = "3x2=";
             for (i = 0; i < 50; i++) {
-                var j,k=0;
-                j=i+1;
-                k=i+50+1;
-                text += "<tr>"+"<td class='tdn'>"+j+"</td>"
-                    +"<td class='tdq'>"+q1+"</td>"
-                    +"<td class='tdn'>"+k+"</td>"
-                    +"<td class='tdq'>"+q2+"</td>"+"</tr>";
+                var j, k = 0;
+                j = i + 1;
+                k = i + 50 + 1;
+                text += "<tr>" + "<td class='tdn'>" + j + "</td>"
+                    + "<td class='tdq'>" + q1 + "</td>"
+                    + "<td class='tdn'>" + k + "</td>"
+                    + "<td class='tdq'>" + q2 + "</td>" + "</tr>";
             }
-            document.getElementById("examTwo").innerHTML=text;
+            document.getElementById("examTwo").innerHTML = text;
         </script>
     </table>
 </div>
@@ -134,8 +157,15 @@
      * [打印]
      * @return {[type]} [description]
      */
-    function redoexam() {
-        window.document.title="redoExam";
+    function redoexam(tablename) {
+        window.document.title = tablename;
+    }
+
+    function getOneQst() { //出一道数学题
+
+
+        return "";
+
     }
 
     function preview() {
@@ -145,16 +175,18 @@
         prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18); //从开始代码向后取html
         prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));//从结束代码向前取html
         window.document.body.innerHTML = prnhtml;
-        //打印之前设置IE打印时不打印页眉 、页脚
+
+        //打印之前设置IE打印时不打印页眉 、页脚，其他浏览器不起作用
         if (!!window.ActiveXObject || "ActiveXObject" in window) {
             remove_ie_header_and_footer();
         }
+
 
         window.print();
         window.document.body.innerHTML = bdhtml;
     }
 
-    //打印之前设置IE打印时不打印页眉 、页脚
+    //打印之前设置IE打印时不打印页眉 、页脚，其他浏览器不起作用
     function remove_ie_header_and_footer() {
         alert("hi");
         var hkey_root, hkey_path, hkey_key;
