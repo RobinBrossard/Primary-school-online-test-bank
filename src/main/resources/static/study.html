@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>佑佑数学作业</title>
+    <title>佑佑的数学作业</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -76,41 +76,53 @@
         }
     }
 
+    .inputdiv {
+        width: 1075px;
+        height: 6em;
+        border: 1px #000 solid;
+        overflow: hidden;
+        padding: 0;
+        word-break: break-all;
+    }
+
 </style>
 <body>
 <a class="print" href="javascript:;" onclick="preview();">打印</a><br/>
-<a class="print" href="javascript:;" onclick="redoexam('hi world');">重新出题</a> <br/>
-<table style="border: 1px solid;width: 80%;align:right">
-    <tr>
-        <th>出题范围</th>
-        <th>参数最大值</th>
-        <th>结果最大值</th>
-    </tr>
-    <tr>
+<a class="print" href="javascript:;" onclick="redoexam('hi world');">重新出题</a>
+<div class="container inputdiv">
+    <table>
+        <tr>
+            <th>出题范围</th>
+            <th>参数最大值</th>
+            <th>结果最大值</th>
+        </tr>
+        <tr>
+            <td><select id="range">
+                <option value="jiafa">加法</option>
+                <option value="jianfa">减法</option>
+                <option value="chengfa">乘法</option>
+                <option value="chufa">除法</option>
+                <option value="jiajian">加减法</option>
+                <option value="chengchu">乘除法</option>
+                <option value="sizehunhe">四则混合计算</option>
+            </select></td>
+            <td><input id="maxnum" value="12" /></td>
+            <td><input id="maxresult" value="100"/></td>
+        </tr>
 
-        <td><select>
-            <option value="jiafa">加法</option>
-            <option value="jianfa">减法</option>
-            <option value="chengfa">乘法</option>
-            <option value="chufa">除法</option>
-            <option value="jiajian">加减法</option>
-            <option value="chengchu">乘除法</option>
-            <option value="sizehunhe">四则混合计算</option>
-        </select></td>
-        <td><input id="maxnum"/></td>
-        <td><input id="maxresult"/></td>
-    </tr>
-
-</table>
+    </table>
+</div>
 <br/>
+
 
 <!--startprint-->
 <div class="container a4-endwise" id="test">
-    <table id="examOne">
+    <table id="examOne" >
+        <tr style="padding-left: 50em">佑佑的数学题&#215;&#247;</tr>
         <script>
             var text = "";
-            var q1 = "1+2=";
-            var q2 = "3x2=";
+            var q1 = "1 &#215; 2=";
+            var q2 = "3 &#215; 2=";
             for (i = 0; i < 50; i++) {
                 var j, k = 0;
                 j = i + 1;
@@ -128,10 +140,11 @@
 </div>
 <div class="container a4-endwise">
     <table id="examTwo">
+        <tr style="padding-left: 50em">佑佑的数学题&#215;&#247;</tr>
         <script>
             var text = "";
-            var q1 = "1+2=";
-            var q2 = "3x2=";
+            var q1 = "1 &#215; 2=";
+            var q2 = "3 &#215; 2=";
             for (i = 0; i < 50; i++) {
                 var j, k = 0;
                 j = i + 1;
@@ -153,22 +166,127 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-    /**
-     * [打印]
-     * @return {[type]} [description]
-     */
+
     function redoexam(tablename) {
-        window.document.title = tablename;
+
+        $(".tdq").each(function (i, e) {
+            $(this).context.innerText = getOneQst();
+        });
     }
 
     function getOneQst() { //出一道数学题
+        var range = document.getElementById("range");
+        var index = range.selectedIndex;
+        var rangeselect = range.options[index].value;
+        var maxnum = $("#maxnum").val();
+        var maxresult = $("#maxresult").val();
+
+        if (maxnum < 10 || maxresult < 0) {
+            alert("参数大于10，结果大于0");
+            return;
+        }
+
+        //四则混合计算-------------------
+        //生成运算符
+        //生成运算符个数1-4
+        var nofo = randomNum(1, 4);
 
 
-        return "";
+        var ofo = []; //1- add; 2- sub;3-multi;4-div
+        for (i = 0; i < nofo; i++) {
+            ofo[i] = randomNum(1, 4);
+        }
+        var numbers = [] //操作数比运算符多一个
+        for (i = 0; i < nofo + 1; i++) {
+            numbers[i] = 0;
+        }
+
+
+        //生成除法
+        for (i = 0; i < nofo; i++) {
+            //从左到右遍历操作符，如果是除法，先生成除数（保证不为0，且能整除），再生成被除数
+            if (ofo[i] == 4) {
+                if (numbers[i] == 0) {
+                    numbers[i + 1] = randomNum(1, maxnum);
+                    numbers[i] = randomNum(0, maxnum) * numbers[i + 1];
+                } else //连续的除号，被除数已经有了
+                {
+                    var divideSet=[];
+                    var k=0;
+                    for(j=1;j<numbers[i]+1;j++){
+                        if(numbers[i]%j==0){
+                            divideSet[k]=j;
+                            k++;
+                        }
+                    }
+                    if(k>1){
+                        numbers[i + 1]=divideSet[randomNum(0,k-1)];
+                    } else {
+                        numbers[i+1]=1;
+                    }
+
+                }
+            }
+        }
+        //生成其他算法
+        for (i = 0; i < nofo; i++) {
+            if (ofo[i] != 4) { //不是除法，对计算符两边没有要求，随机生成两边数字
+                if (numbers[i] == 0) {
+                    numbers[i] = randomNum(0, maxnum);
+                }
+                if (numbers[i + 1] == 0) {
+                    numbers[i + 1] = randomNum(0, maxnum);
+                }
+            }
+        }
+
+        //计算结果
+
+        //拼出算式
+
+        resultfactor = numbers[0];
+        for (i = 0; i < nofo; i++) {
+            switch (ofo[i]) {
+                case 1:
+                    resultfactor = resultfactor + " + " + numbers[i + 1];
+                    break;
+                case 2:
+                    resultfactor = resultfactor + " - " + numbers[i + 1];
+                    break;
+                case 3:
+                    resultfactor = resultfactor + " &#215; " + numbers[i + 1];
+                    break;
+                case 4:
+                    resultfactor = resultfactor + " &#247; " + numbers[i + 1];
+                    break;
+                default:
+                    resultfactor = resultfactor + "error";
+
+            }
+        }
+        resultfactor = resultfactor + " =";
+       // alert(resultfactor);
+        return resultfactor;
+
 
     }
 
-    function preview() {
+    //生成从minNum到maxNum的随机数
+    function randomNum(minNum, maxNum) {
+        switch (arguments.length) {
+            case 1:
+                return parseInt(Math.random() * minNum + 1, 10);
+                break;
+            case 2:
+                return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+                break;
+            default:
+                return 0;
+                break;
+        }
+    }
+
+    function preview() { //打印
         bdhtml = window.document.body.innerHTML;//获取当前页的html代码
         sprnstr = "<!--startprint-->";//设置打印开始区域
         eprnstr = "<!--endprint-->";//设置打印结束区域
