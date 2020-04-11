@@ -22,7 +22,7 @@
     .a4-endwise {
         width: 1075px;
         height: 1567px;
-        border: 1px #000 solid;
+        /*border: 1px #000 solid;*/
         overflow: hidden;
         padding: 0;
         word-break: break-all;
@@ -31,7 +31,7 @@
     .a4-broadwise {
         width: 1569px;
         height: 1073px;
-        border: 1px #000 solid;
+        /*border: 1px #000 solid;*/
         overflow: hidden;
         padding: 0;
         word-break: break-all;
@@ -118,7 +118,7 @@
 <!--startprint-->
 <div class="container a4-endwise" id="test">
     <table id="examOne" >
-        <tr style="padding-left: 50em">佑佑的数学题&#215;&#247;</tr>
+
         <script>
             var text = "";
             var q1 = "1 &#215; 2=";
@@ -140,10 +140,11 @@
 </div>
 <div class="container a4-endwise">
     <table id="examTwo">
-        <tr style="padding-left: 50em">佑佑的数学题&#215;&#247;</tr>
+
         <script>
             var text = "";
             var q1 = "1 &#215; 2=";
+
             var q2 = "3 &#215; 2=";
             for (i = 0; i < 50; i++) {
                 var j, k = 0;
@@ -189,60 +190,103 @@
         //四则混合计算-------------------
         //生成运算符
         //生成运算符个数1-4
-        var nofo = randomNum(1, 4);
-
-
+        var nofo=0;
         var ofo = []; //1- add; 2- sub;3-multi;4-div
-        for (i = 0; i < nofo; i++) {
-            ofo[i] = randomNum(1, 4);
-        }
-        var numbers = [] //操作数比运算符多一个
-        for (i = 0; i < nofo + 1; i++) {
-            numbers[i] = 0;
-        }
+        var numbers = []; //操作数比运算符多一个
+        var checkresult = -1;
+        do {
+            ofo=[];
+            numbers=[];
+            nofo = randomNum(1, 4);
+
+            for (i = 0; i < nofo; i++) {
+                ofo[i] = randomNum(1, 4);
+            }
+
+            for (i = 0; i < nofo + 1; i++) {
+                numbers[i] = 0;
+            }
 
 
-        //生成除法
-        for (i = 0; i < nofo; i++) {
-            //从左到右遍历操作符，如果是除法，先生成除数（保证不为0，且能整除），再生成被除数
-            if (ofo[i] == 4) {
-                if (numbers[i] == 0) {
-                    numbers[i + 1] = randomNum(1, maxnum);
-                    numbers[i] = randomNum(0, maxnum) * numbers[i + 1];
-                } else //连续的除号，被除数已经有了
-                {
-                    var divideSet=[];
-                    var k=0;
-                    for(j=1;j<numbers[i]+1;j++){
-                        if(numbers[i]%j==0){
-                            divideSet[k]=j;
-                            k++;
+            //生成除法
+            for (i = 0; i < nofo; i++) {
+                //从左到右遍历操作符，如果是除法，先生成除数（保证不为0，且能整除），再生成被除数
+                if (ofo[i] == 4) {
+                    if (numbers[i] == 0) {
+                        numbers[i + 1] = randomNum(1, maxnum);
+                        numbers[i] = randomNum(0, maxnum) * numbers[i + 1];
+                    } else //连续的除号，被除数已经有了
+                    {
+                        var divideSet = [];
+                        var k = 0;
+                        for (j = 1; j < numbers[i] + 1; j++) {
+                            if (numbers[i] % j == 0) {
+                                divideSet[k] = j;
+                                k++;
+                            }
                         }
+                        if (k > 1) {
+                            numbers[i + 1] = divideSet[randomNum(0, k - 1)];
+                        } else {
+                            numbers[i + 1] = 1;
+                        }
+
                     }
-                    if(k>1){
-                        numbers[i + 1]=divideSet[randomNum(0,k-1)];
+                }
+            }
+            //生成其他算法
+            for (i = 0; i < nofo; i++) {
+                if (ofo[i] != 4) { //不是除法，对计算符两边没有要求，随机生成两边数字
+                    if (numbers[i] == 0) {
+                        numbers[i] = randomNum(0, maxnum);
+                    }
+                    if (numbers[i + 1] == 0) {
+                        numbers[i + 1] = randomNum(0, maxnum);
+                    }
+                }
+            }
+
+            //验证计算结果
+            var ofo1=ofo.slice(0);
+            var numbers1=numbers.slice(0);
+            //先乘除，再加减
+
+            for (i = 0; i < nofo; i++ ) {
+                if (ofo1[i] > 2) {
+                    if (ofo1[i] == 3) {
+                        //multi
+                        numbers1[i + 1] = numbers1[i] * numbers1[i + 1];
+                        numbers1[i] = 0;
+                        ofo[i] = 1;
                     } else {
-                        numbers[i+1]=1;
+                        //div
+                        numbers1[i + 1] = numbers1[i] / numbers1[i + 1];
+                        numbers1[i] = 0;
+                        ofo1[i] = 1;
                     }
-
                 }
             }
-        }
-        //生成其他算法
-        for (i = 0; i < nofo; i++) {
-            if (ofo[i] != 4) { //不是除法，对计算符两边没有要求，随机生成两边数字
-                if (numbers[i] == 0) {
-                    numbers[i] = randomNum(0, maxnum);
-                }
-                if (numbers[i + 1] == 0) {
-                    numbers[i + 1] = randomNum(0, maxnum);
+
+            for (i = 0; i < nofo; i++) {
+
+                if (ofo1[i] == 1) {
+                    //add
+                    numbers1[i + 1] = numbers1[i] + numbers1[i + 1];
+                    numbers1[i] = 0;
+                } else {
+                    //sub
+                    numbers1[i + 1] = numbers1[i] - numbers1[i + 1];
+                    numbers1[i] = 0;
                 }
             }
-        }
+            checkresult = numbers1[nofo + 1];
 
-        //计算结果
 
-        //拼出算式
+        }while (checkresult>=0);
+
+        //拼出算式 +-×÷
+        var chen = " × ";
+        var chu = " ÷ ";
 
         resultfactor = numbers[0];
         for (i = 0; i < nofo; i++) {
@@ -254,17 +298,17 @@
                     resultfactor = resultfactor + " - " + numbers[i + 1];
                     break;
                 case 3:
-                    resultfactor = resultfactor + " &#215; " + numbers[i + 1];
+                    resultfactor = resultfactor + chen + numbers[i + 1];
                     break;
                 case 4:
-                    resultfactor = resultfactor + " &#247; " + numbers[i + 1];
+                    resultfactor = resultfactor + chu + numbers[i + 1];
                     break;
                 default:
                     resultfactor = resultfactor + "error";
 
             }
         }
-        resultfactor = resultfactor + " =";
+        resultfactor = resultfactor + " = "+checkresult;
        // alert(resultfactor);
         return resultfactor;
 
