@@ -19,10 +19,10 @@
     <![endif]-->
 </head>
 <style>
-    .a4-endwise {
-        width: 1075px;
-        height: 1567px;
-        /*border: 1px #000 solid;*/
+    .letter-endwise {
+        width: 1073px;
+        height: 1401px;
+        border: 1px #000 solid;
         overflow: hidden;
         padding: 0;
         word-break: break-all;
@@ -42,20 +42,13 @@
         right: 5%;
     }
 
-    .beforeHeader,
-    .afterFooter {
-        display: none;
-    }
-
     table {
         width: 100%;
     }
 
     tr {
         width: 100%;
-        font-size: 5.9mm;
-
-
+        font-size: 1.4em;
     }
 
     .tdq {
@@ -66,14 +59,6 @@
     .tdn {
         width: 5%;
         text-align: right;
-    }
-
-    @media print {
-        /* 打印时显示 */
-        .beforeHeader,
-        .afterFooter {
-            display: block;
-        }
     }
 
     .inputdiv {
@@ -117,9 +102,8 @@
 
 
 <!--startprint-->
-<div class="container a4-endwise" id="test">
-    <table id="examOne">
-
+<div class="container letter-endwise">
+    <table id="examOne" >
         <script>
             var text = "";
             var q1 = "1 &#215; 2=";
@@ -135,17 +119,14 @@
             }
             document.getElementById("examOne").innerHTML = text;
         </script>
-
     </table>
-
 </div>
-<div class="container a4-endwise">
-    <table id="examTwo">
-
+<br/>
+<div class="container letter-endwise">
+    <table id="examTwo" >
         <script>
             var text = "";
             var q1 = "1 &#215; 2=";
-
             var q2 = "3 &#215; 2=";
             for (i = 0; i < 50; i++) {
                 var j, k = 0;
@@ -160,7 +141,6 @@
         </script>
     </table>
 </div>
-
 <!--endprint-->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -184,7 +164,7 @@
 
     function getOneQst() { //出一道数学题
 
-       //内函数，共享参数
+        //内函数，共享参数
         function chengchufa(numbersio, ofoio, j, k) { //生成jk间连续的乘除法
             var dbg = 1;
             var preItemsResult = 1;
@@ -194,7 +174,7 @@
                 if (ofoio[j] == 3) {
                     numbersio[j] = randomNum(0, maxnum);
                     numbersio[j + 1] = randomNum(0, maxnum);
-                } else if(ofoio[j] == 4){
+                } else if (ofoio[j] == 4) {
                     numbersio[j + 1] = randomNum(1, maxnum);
                     numbersio[j] = randomNum(0, maxnum) * numbersio[j + 1];
                 }
@@ -258,7 +238,7 @@
         var rangeselect = range.options[index].value;
         var maxnum = $("#maxnum").val();
         var maxresult = $("#maxresult").val();
-        var handaan=$("#handaan").is(':checked');
+        var handaan = $("#handaan").is(':checked');
 
 
         if (maxnum < 10 || maxresult < 0) {
@@ -400,13 +380,11 @@
 
             }
         }
-        if(handaan){
+        if (handaan) {
             resultfactor = resultfactor + " = " + checkresult;
-        } else
-        {
+        } else {
             resultfactor = resultfactor + " = ";
         }
-
 
 
         return resultfactor;
