@@ -22,7 +22,7 @@
     .letter-endwise {
         width: 1073px;
         height: 1401px;
-        border: 1px #000 solid;
+        /*border: 1px #000 solid;*/
         overflow: hidden;
         padding: 0;
         word-break: break-all;
@@ -103,6 +103,9 @@
 
 <!--startprint-->
 <div class="container letter-endwise">
+
+
+
     <table id="examOne">
         <script>
             var text = "";
@@ -256,10 +259,10 @@
         do {
             ofo = [];
             numbers = [];
-            nofo = randomNum(1, 4);
+            nofo = randomNum(2, 4); //调整出题难度
 
             for (i = 0; i < nofo; i++) {
-                ofo[i] = randomNum(1, 4);
+                ofo[i] = randomNum(1, 4); //调整加减乘除1234
             }
 
             for (i = 0; i < nofo + 1; i++) {
@@ -423,11 +426,15 @@
 
         window.print();
         window.document.body.innerHTML = bdhtml;
+        //打印后还原，设置IE打印时页眉 、页脚，其他浏览器不起作用
+        if (!!window.ActiveXObject || "ActiveXObject" in window) {
+            PageSetup_Default();
+        }
     }
 
     //打印之前设置IE打印时不打印页眉 、页脚，其他浏览器不起作用
     function remove_ie_header_and_footer() {
-        alert("hi");
+
         var hkey_root, hkey_path, hkey_key;
         hkey_root = "HKEY_CURRENT_USER";
         hkey_path = "\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
@@ -440,6 +447,24 @@
         } catch (e) {
         }
     }
+
+    //设置网页打印的页眉页脚为默认值
+    function PageSetup_Default()
+    {
+        try
+        {
+            var Wsh=new ActiveXObject("WScript.Shell");
+            HKEY_Key="header";
+            Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&w&b页码,&p/&P");
+            HKEY_Key="footer";
+            Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&u&b&d");
+        }
+        catch(e)
+        {}
+
+    }
+    PageSetup_Default();
+</script>
 
 
 </script>
