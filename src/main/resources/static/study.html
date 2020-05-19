@@ -105,7 +105,6 @@
 <div class="container letter-endwise">
 
 
-
     <table id="examOne">
         <script>
             var text = "";
@@ -249,7 +248,10 @@
             return;
         }
 
-        //四则混合计算-------------------
+        //获取select range的value
+        var rangetext = $("#range option:selected").val();
+
+
         //生成运算符
         //生成运算符个数1-4
         var nofo = 0;
@@ -259,10 +261,65 @@
         do {
             ofo = [];
             numbers = [];
-            nofo = randomNum(2, 4); //调整出题难度
+            switch (rangetext) { //调整出题难度
+                case "jiafa":
+                    nofo = 1;
+                    break;
+                case "jianfa":
+                    nofo = 1;
+                    break;
+                case "chengfa":
+                    nofo = 1;
+                    break;
+                case "chufa":
+                    nofo = 1;
+                    break;
+                case "jiajian":
+                    nofo = randomNum(1, 2);
+                    break;
+                case "chengchu":
+                    nofo = randomNum(1, 2);
+                    break;
+                case "sizehunhe":
+                    nofo = randomNum(2, 5);
+                    break;
+                default:
+                    nofo = randomNum(1, 5);
+            }
+
 
             for (i = 0; i < nofo; i++) {
-                ofo[i] = randomNum(1, 4); //调整加减乘除1234
+
+                switch (rangetext) { //调整加减乘除1234
+                    case "jiafa":
+                        ofo[i] = 1;
+                        break;
+                    case "jianfa":
+                        ofo[i] = 2;
+                        break;
+                    case "chengfa":
+                        ofo[i] = 3;
+                        break;
+                    case "chufa":
+                        ofo[i] = 4;
+                        break;
+                    case "jiajian":
+                        ofo[i] = randomNum(1, 2);
+                        break;
+                    case "chengchu":
+                        ofo[i] = randomNum(3, 4);
+                        break;
+                    case "sizehunhe":
+                        ofo[i] = randomNum(1, 4);
+                        break;
+                    default:
+                        ofo[i] = randomNum(1, 4);
+                }
+
+
+
+
+
             }
 
             for (i = 0; i < nofo + 1; i++) {
@@ -449,24 +506,19 @@
     }
 
     //设置网页打印的页眉页脚为默认值
-    function PageSetup_Default()
-    {
-        try
-        {
-            var Wsh=new ActiveXObject("WScript.Shell");
-            HKEY_Key="header";
-            Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&w&b页码,&p/&P");
-            HKEY_Key="footer";
-            Wsh.RegWrite(HKEY_Root+HKEY_Path+HKEY_Key,"&u&b&d");
+    function PageSetup_Default() {
+        try {
+            var Wsh = new ActiveXObject("WScript.Shell");
+            HKEY_Key = "header";
+            Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "&w&b页码,&p/&P");
+            HKEY_Key = "footer";
+            Wsh.RegWrite(HKEY_Root + HKEY_Path + HKEY_Key, "&u&b&d");
+        } catch (e) {
         }
-        catch(e)
-        {}
 
     }
+
     PageSetup_Default();
-</script>
-
-
 </script>
 
 </body>
