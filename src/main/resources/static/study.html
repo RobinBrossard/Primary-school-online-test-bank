@@ -17,6 +17,24 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+        var dbg = 0; //1打印，0不打印
+        function dbgalert(msg, dbg) {
+        if (dbg == 1) {
+            alert(msg);
+        }
+    }
+        if (window.screen.width < 1920) {
+      document
+        .querySelector('body')
+        .setAttribute(
+          "content",
+          "width=device-width,initial-scale=" + screen.width / 1920
+        );
+    }
+
+    alert("window.screen.width:"+window.screen.width,1);
+    </script>
 </head>
 <style>
     .letter-endwise {
@@ -74,6 +92,9 @@
         word-break: break-all;
     }
 
+
+
+
 </style>
 <body>
 <a class="print" href="javascript:;" onclick="preview();">打印</a><br/>
@@ -97,7 +118,7 @@
             </select></td>
             <td><input id="maxnum" value="12"/></td>
             <td><input id="maxresult" value="200"/></td>
-            <td><input type="checkbox" id="handaan" checked="checked"> 包含答案</input></td>
+            <td><input type="checkbox" id="handaan" checked="checked"/> 包含答案</td>
         </tr>
 
     </table>
@@ -124,6 +145,9 @@
                     + "<td class='tdq'>" + q2 + "</td>" + "</tr>";
             }
             document.getElementById("examOne").innerHTML = text;
+
+
+
         </script>
     </table>
 </div>
@@ -144,6 +168,9 @@
                     + "<td class='tdq'>" + q2 + "</td>" + "</tr>";
             }
             document.getElementById("examTwo").innerHTML = text;
+
+
+
         </script>
     </table>
 </div>
@@ -154,11 +181,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-    function dbgalert(msg, dbg) {
-        if (dbg == 1) {
-            alert(msg);
-        }
-    }
+
 
     function redoexam(tablename) {
         $(".tdq").each(function (i, e) {
@@ -170,8 +193,7 @@
 
     function getOneQst() { //出一道数学题
 
-        //内函数，共享参数
-        function chengchufa(numbersio, ofoio, j, k) { //生成jk间连续的乘除法
+        function chengchufa(numbersio, ofoio, j, k) { // 内函数，共享参数 //生成jk间连续的乘除法
             var dbg = 1;
             var preItemsResult = 1;
             var preItemofo = ofoio[j];
@@ -208,7 +230,7 @@
                     preItemofo = 3;
                 }
                 if (ofoio[i] == 4) { //除法
-                    //是第一个运算符
+                //是第一个运算符
                     if (i == j) {
                         numbersio[i + 1] = randomNum(1, maxnum);
                         numbersio[i] = randomNum(0, maxnum) * numbersio[i + 1];
@@ -238,7 +260,7 @@
             }
         }
 
-        var dbg = 0; //1打印，0不打印
+
         var range = document.getElementById("range");
         var index = range.selectedIndex;
         var rangeselect = range.options[index].value;
@@ -518,6 +540,9 @@
     }
 
     PageSetup_Default();
+
+
+
 </script>
 
 </body>
